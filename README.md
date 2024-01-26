@@ -1,4 +1,4 @@
-# WEEK 1
+# WEEK 1 
 ## a) Intensity Transformations
 
 ```python
@@ -344,4 +344,144 @@ librosa.display.waveshow(y=samples_multi, sr=sr_multi)
 plt.title("Multi (here stereo)")
 
 plt.show()
+```
+# WEEK 7
+## a) time-domain speech signal, estimate its pitch period
+
+```
+import librosa
+from librosa import display #requires explicit import
+import matplotlib.pyplot as plt
+from scipy.fft import fft, fftfreq, fftshift
+import numpy as np
+fpath = input(”Enter path of the audio file: ”)
+samples, sr = librosa.load(fpath, sr=None, mono=True)
+fast_ft = fft(samples)
+xf = fftfreq(samples.shape[-1], sr)
+plt.subplot(2, 1, 1)
+librosa.display.waveshow(y=samples, sr=sr) #waveform
+plt.title(”An Audio Waveform”, loc=”left”)
+plt.subplot(2, 1, 2)
+plt.plot(xf, abs(fast_ft)) #abs because we want real numbers not complex
+plt.title(”Corresponding Fast Fourier Transform of the Audio Waveform”, loc=”left”)
+plt.show()
+```
+
+# WEEK 8
+## a) splitting analysis/Visualization
+
+```
+import librosa
+fpath = input(”Enter path of the audio file: ”)
+samples, sr = librosa.load(fpath, sr=None, mono=True)
+print(”File:”, fpath)
+print(”Sampling rate:”, sr, ”Hz”)
+print(”Duration:”, samples.shape[-1]/sr, ”s”)
+```
+
+## b) using a DFT filter bank on the speech signal
+
+```
+import librosa
+import librosa.display
+import matplotlib.pyplot as plt
+fpath = input(”Enter path of the audio file: ”)
+samples, sr = librosa.load(fpath, sr=None, mono=True)
+#normalize:
+normalized_audio = librosa.util.normalize(samples)
+#plot
+plt.subplot(2, 1, 1)
+librosa.display.waveshow(y=samples, sr=sr)
+plt.title(”Original Waveform”, loc=”left”)
+plt.subplot(2, 1, 2)
+librosa.display.waveshow(y=normalized_audio, sr=sr)
+plt.title(”Normalized Waveform”, loc=”left”)
+plt.show()
+```
+
+## c) To down sample an audio signal
+
+```
+import librosa
+import librosa.display
+import matplotlib.pyplot as plt
+fpath = input(”Enter path of the audio file: ”)
+#original sampling rate
+samples, sr = librosa.load(fpath, sr=None, mono=True, duration=4)
+#downsampled
+samples_d, sr_d = librosa.load(fpath, sr=200, mono=True, duration=4)
+#plot
+plt.subplot(2, 1, 1)
+librosa.display.waveshow(y=samples, sr=sr)
+plt.title(”Original Waveform”, loc=”left”)
+plt.subplot(2, 1, 2)
+librosa.display.waveshow(y=samples_d, sr=sr_d)
+plt.title(”Downsampled Waveform”, loc=”left”)
+plt.show()
+```
+
+# WEEK 9
+## a) perform splitting analysis in more discriminative
+
+```
+import speech_recognition as sr
+recog = sr.Recognizer()
+fpath = input(”Enter the path of the audio file containing speech: ”)
+audio_file = sr.AudioFile(fpath)
+with audio_file as source:
+audio_data = recog.record(source, duration=20)
+google_res = recog.recognize_google(audio_data)
+print(”Google:”, google_res)
+wit_key = input(”Enter your wit api token (key): ”)
+wit_res = recog.recognize_wit(audio_data, wit_key)
+print(”Wit:”, wit_res)
+sphinx_res = recog.recognize_sphinx(audio_data)
+print(”Sphinx:”, sphinx_res)
+client_id = input(”Enter houndify cliend-id: ”)
+client_key = input(”Enter houndify client-key: ”)
+houndify_res = recog.recognize_houndify(audio_data, client_id, client_key)
+print(”Houndify:”, houndify_res)
+```
+
+# WEEK 10
+## a) linear predictive coding analysis.
+
+```
+from gtts import gTTS
+text = input(”Enter the text to convert to speech: ”)
+tts = gTTS(text)
+fname = input(”Enter the name of the file to save the speech as: ”) + ”.wav”
+tts.save(fname)
+```
+
+# WEEK 11
+## a)  text to convert as a speech signal
+
+```
+import webbrowser
+import speech_recognition as sr
+recog = sr.Recognizer()
+with sr.Microphone() as source:
+print(”Tell a url to open in the browser”)
+print(”Listening...”)
+audio_data = recog.listen(source)
+print(”Stopped listening”)
+google_res = recog.recognize_google(audio_data)
+print(”Speech detected:”, google_res)
+print(”Opening in browser...”)
+webbrowser.open(google_res)
+```
+
+# WEEK 12
+## a) Identify speech from provided input audio signal
+
+```
+import speech_recognition as sr
+recog = sr.Recognizer()
+fpath = input(”Enter audio file path: ”)
+with sr.AudioFile(fpath) as source:
+audio_data = recog.record(source)
+google_res = recog.recognize_google(audio_data)
+print(”Speech detected:”, google_res)
+
 ```
