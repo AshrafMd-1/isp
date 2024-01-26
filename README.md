@@ -348,7 +348,7 @@ plt.show()
 # WEEK 7
 ## a) time-domain speech signal, estimate its pitch period
 
-```
+```python
 import librosa
 from librosa import display #requires explicit import
 import matplotlib.pyplot as plt
@@ -370,7 +370,7 @@ plt.show()
 # WEEK 8
 ## a) splitting analysis/Visualization
 
-```
+```python
 import librosa
 fpath = input(”Enter path of the audio file: ”)
 samples, sr = librosa.load(fpath, sr=None, mono=True)
@@ -381,7 +381,7 @@ print(”Duration:”, samples.shape[-1]/sr, ”s”)
 
 ## b) using a DFT filter bank on the speech signal
 
-```
+```python
 import librosa
 import librosa.display
 import matplotlib.pyplot as plt
@@ -401,7 +401,7 @@ plt.show()
 
 ## c) To down sample an audio signal
 
-```
+```python
 import librosa
 import librosa.display
 import matplotlib.pyplot as plt
@@ -423,7 +423,7 @@ plt.show()
 # WEEK 9
 ## a) perform splitting analysis in more discriminative
 
-```
+```python
 import speech_recognition as sr
 recog = sr.Recognizer()
 fpath = input(”Enter the path of the audio file containing speech: ”)
@@ -446,7 +446,7 @@ print(”Houndify:”, houndify_res)
 # WEEK 10
 ## a) linear predictive coding analysis.
 
-```
+```python
 from gtts import gTTS
 text = input(”Enter the text to convert to speech: ”)
 tts = gTTS(text)
@@ -457,7 +457,7 @@ tts.save(fname)
 # WEEK 11
 ## a)  text to convert as a speech signal
 
-```
+```python
 import webbrowser
 import speech_recognition as sr
 recog = sr.Recognizer()
@@ -475,7 +475,7 @@ webbrowser.open(google_res)
 # WEEK 12
 ## a) Identify speech from provided input audio signal
 
-```
+```python
 import speech_recognition as sr
 recog = sr.Recognizer()
 fpath = input(”Enter audio file path: ”)
